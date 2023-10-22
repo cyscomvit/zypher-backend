@@ -1,0 +1,18 @@
+{
+  "name": "paradox-23",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "https://github.com/ComputerSocietyVITC/paradox-23.git",
+  "private": true,
+  "scripts": {
+    "start": "touch paradox.sqlite3 && chmod 644 paradox.sqlite3 && node index.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^8.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "morgan": "^1.10.0"
+  }
+}
