@@ -1,6 +1,7 @@
 CREATE TABLE
     IF NOT EXISTS questions (
         level INTEGER PRIMARY KEY NOT NULL,
+        scene INTEGER NOT NULL DEFAULT 1,
         text TEXT NOT NULL,
         image TEXT,
         answer TEXT NOT NULL
@@ -14,6 +15,8 @@ CREATE TABLE
         avatar TEXT NOT NULL,
         password TEXT NOT NULL,
         level INTEGER NOT NULL DEFAULT 1,
+        scene_reached NOT NULL DEFAULT 1,
+        answered_levels TEXT NOT NULL DEFAULT '[]',
         reachedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 

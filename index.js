@@ -60,23 +60,36 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/me", authorize, (req, res) => {
-    res.json(db.prepare("SELECT username, level FROM users WHERE username = ?").get(req.username));
+    res.json(db.prepare("SELECT username, level, scene_reached, answered_levels FROM users WHERE username = ?").get(req.username));
 });
 
-app.get("/question", authorize, (req, res) => {
+app.post("/question", authorize, (req, res) => {
+    // res.json(
+    //     db
+    //         .prepare(
+    //             "SELECT level, text, image FROM questions WHERE level = (SELECT level FROM users WHERE username = ?)"
+    //         )
+    //         .get(req.username)
+    // );
+
+    const { question_level = "" } = req.body;
     res.json(
         db
             .prepare(
-                "SELECT level, text, image FROM questions WHERE level = (SELECT level FROM users WHERE username = ?)"
+                "SELECT level, scene, text, image FROM questions WHERE level = ?"
             )
-            .get(req.username)
-    );
+            .get(question_level)
+    )
 });
 
 app.post("/answer", authorize, (req, res) => {
-    const { answer = "" } = req.body;
+    // this section will work only if user submits answer
+    const { answer = "", question_level = "" } = req.body;
     const user = db.prepare("SELECT * FROM users WHERE username = ?").get(req.username);
-    const question = db.prepare("SELECT * FROM questions WHERE level = ?").get(user.level);
+    const question = db.prepare("SELECT * FROM questions WHERE level = ?").get(question_level);
+
+    // getting the correct levels
+    const currentLevels = (user.answered_levels || "").split(",").map(Number);
 
     if (!question) {
         return res.json({ error: "No more questions" });
@@ -88,13 +101,56 @@ app.post("/answer", authorize, (req, res) => {
         answer
     );
 
+
+
     if (answer !== question.answer) {
         return res.json({ correct: false });
     }
 
-    db.prepare(
-        "UPDATE users SET level = level + 1, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
-    ).run(user.username);
+    // adding the current level to the list of answered levels since the answer is correct
+    if (!currentLevels.includes(question.level)) {
+        currentLevels.push(question.level);
+    }
+    console.log(currentLevels.join(","))
+    db.prepare("UPDATE users SET answered_levels = ? WHERE username = ?").run(
+        currentLevels.join(","),
+        user.username
+    );
+
+// now updating the user scene and level
+    if (user.level === 1 && user.scene_reached === 1 && question.scene === 1) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 2, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+    }
+    // he/she solves either chest level 2 or 3, which increments the user level
+    else if (user.scene_reached === 2 && question.scene === 2) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 3, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+    }
+    // similarly for others
+    else if (user.scene_reached === 3 && question.scene === 3) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 4, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+    }
+    else if (user.scene_reached === 4 && question.scene === 4) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 5, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+    }
+    // this logic is for user coming back after completing the game, to climb up the leaderboard. only level is updated, scene remains same
+    else if (user.scene_reached != question.scene) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+    }
+    // for now scene 5 is finish line, if scene 5 is reached, game ends
+
+    // db.prepare(
+    //     "UPDATE users SET level = level + 1, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+    // ).run(user.username);
 
     res.json({ correct: true });
 });
@@ -117,14 +173,14 @@ app.post("/add-question", (req, res) => {
     //     return res.status(401).json({ error: "Invalid password" });
     // }
 
-    const { level, text, image, answer } = req.body;
+    const { level, scene, text, image, answer } = req.body;
 
     res.json(
         db
             .prepare(
-                "INSERT INTO questions (level, text, image, answer) VALUES (?, ?, ?, ?) RETURNING *"
+                "INSERT INTO questions (level, scene, text, image, answer) VALUES (?, ?, ?, ?, ?) RETURNING *"
             )
-            .get(level, text, image, answer)
+            .get(level, scene, text, image, answer)
     );
 });
 
