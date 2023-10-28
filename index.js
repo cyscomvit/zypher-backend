@@ -20,16 +20,55 @@ app.use(Express.json());
 app.use(cors('*'));
 
 app.post("/register", async (req, res) => {
-    const { username = "", password = "", avatar = "" } = req.body;
+    const { username = "", password = "", avatar = "", member_1_name, member_1_regno, member_2_name, member_2_regno,member_3_name, member_3_regno, } = req.body;
+    console.log(req.body);
 
     try {
-        const user = db
+        // so 3 cases
+        // one case is where only one member name and regno is ther
+        // second case is where two member name and regno is there
+        // third case is where all three member name and regno is there
+        if(member_1_name && member_1_regno && member_2_name && member_2_regno && member_3_name && member_3_regno){
+            const user = db
             .prepare(
-                "INSERT INTO users (username, password, avatar) VALUES (?, ?, ?) RETURNING username, avatar, level"
+                "INSERT INTO users (username, password, avatar, member_1_name, member_1_regno, member_2_name, member_2_regno, member_3_name, member_3_regno) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING username, avatar, level"
             )
-            .get(username, await Password.hash(password), avatar);
+            .get(username, await Password.hash(password), avatar, member_1_name, member_1_regno, member_2_name, member_2_regno, member_3_name, member_3_regno);
+            console.log(user)
+            res.json(user);
+            
+        }
+        else if(member_1_name && member_1_regno && member_2_name && member_2_regno){
+            const user = db
+            .prepare(
+                "INSERT INTO users (username, password, avatar, member_1_name, member_1_regno, member_2_name, member_2_regno) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING username, avatar, level"
+            )
+            .get(username, await Password.hash(password), avatar, member_1_name, member_1_regno, member_2_name, member_2_regno);
+            console.log(user)
+            res.json(user);
+        }
+        else if(member_1_name && member_1_regno){
+            const user = db
+            .prepare(
+                "INSERT INTO users (username, password, avatar, member_1_name, member_1_regno) VALUES (?, ?, ?, ?, ?) RETURNING username, avatar, level"
+            )
+            .get(username, await Password.hash(password), avatar, member_1_name, member_1_regno);
+            console.log(user)
+            res.json(user);
+        }
+        else{
+            res.status(400).json({ error: "Please enter atleast one member name and regno" });
+        }
 
-        res.json(user);
+        // const user = db
+        //     .prepare(
+        //         "INSERT INTO users (username, password, avatar) VALUES (?, ?, ?) RETURNING username, avatar, level"
+        //     )
+        //     .get(username, await Password.hash(password), avatar);
+
+        // res.json(user);
+
+
     } catch (err) {
         if (err.code === "SQLITE_CONSTRAINT_CHECK")
             return res.status(400).json({ error: "Username must be between 3 and 20 characters" });
@@ -48,6 +87,7 @@ app.post("/register", async (req, res) => {
 const [login, authorize] = useJwt(process.env.JWT_SECRET, "HS256", "2d");
 
 app.post("/login", async (req, res) => {
+    // team username and password for authentication
     const { username = "", password = "" } = req.body;
 
     const user = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
