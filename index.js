@@ -18,6 +18,83 @@ const db = createDatabase("paradox.sqlite3");
 
 app.use(Express.json());
 app.use(cors('*'));
+app.set('view engine', 'ejs');
+
+
+app.get('/admin/index', async(req,res)=>{
+    let regTeamDetails = db.prepare("SELECT username, member_1_name, member_1_regno, member_2_name, member_2_regno, member_3_name, member_3_regno, answered_levels FROM users").all();
+    // we will get the challenge completed users based on answered_levels
+    console.log(regTeamDetails)
+    let challenge_1_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("1");
+    });
+    let challenge_2_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("2");
+    });
+    let challenge_3_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("3");
+    });
+    let challenge_4_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("4");
+    });
+    let challenge_5_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("5");
+    });
+    let challenge_6_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("6");
+    });
+    let challenge_7_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("7");
+    });
+    let challenge_8_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("8");
+    });
+    let challenge_9_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("9");
+    });
+    let challenge_10_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("10");
+    });
+    let challenge_11_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("11");
+    });
+    let challenge_12_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("12");
+    });
+    let challenge_13_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("13");
+    });
+    let challenge_14_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("14");
+    });
+    let challenge_15_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("15");
+    });
+    let challenge_16_completed = regTeamDetails.filter((team) => {
+        return team.answered_levels.includes("16");
+    });
+
+    res.render('index', {
+        challenge_1_completed: challenge_1_completed,
+        challenge_2_completed: challenge_2_completed,
+        challenge_3_completed: challenge_3_completed,
+        challenge_4_completed: challenge_4_completed,
+        challenge_5_completed: challenge_5_completed,
+        challenge_6_completed: challenge_6_completed,
+        challenge_7_completed: challenge_7_completed,
+        challenge_8_completed: challenge_8_completed,
+        challenge_9_completed: challenge_9_completed,
+        challenge_10_completed: challenge_10_completed,
+        challenge_11_completed: challenge_11_completed,
+        challenge_12_completed: challenge_12_completed,
+        challenge_13_completed: challenge_13_completed,
+        challenge_14_completed: challenge_14_completed,
+        challenge_15_completed: challenge_15_completed,
+        challenge_16_completed: challenge_16_completed,
+        regTeamDetails: regTeamDetails,
+    })
+
+})
 
 app.post("/register", async (req, res) => {
     const { username = "", password = "", avatar = "", member_1_name, member_1_regno, member_2_name, member_2_regno,member_3_name, member_3_regno, } = req.body;

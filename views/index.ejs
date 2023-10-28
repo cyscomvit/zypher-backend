@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>View Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+
+<body data-bs-theme="dark">
+    <div class="container-fluid ">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container mt-5">
+    </div>
+    <div class="container">
+        <p class="d-inline-flex gap-1">
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                aria-expanded="false" aria-controls="collapseExample">
+                Click to show registered team details
+            </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="container">
+                <h3>Registered Team Details </h3>
+            </div>
+            <%= regTeamDetails[0] %>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Team Name</th>
+                        <th scope="col">Member 1 Name</th>
+                        <th scope="col">Member 1 RegNo</th>
+                        <th scope="col">Member 2 Name</th>
+                        <th scope="col">Member 2 RegNo</th>
+                        <th scope="col">Member 3 Name</th>
+                        <th scope="col">Member 3 RegNo</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <% regTeamDetails.forEach(team => { %>
+                        <tr>
+                            <td><%= team.username %></td>
+                            <td><%= team.member_1_name %></td>
+                            <td><%= team.member_1_regno %></td>
+                            <td><%= team.member_2_name %></td>
+                            <td><%= team.member_2_regno %></td>
+                            <td><%= team.member_3_name %></td>
+                            <td><%= team.member_3_regno %></td>
+                        </tr>
+                    <% }) %>
+                    
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+    <!-- for scene one -->
+    <div class="container mt-3 m-auto">
+        <h4>Scene 1</h4>
+
+        <div class="container mt-2 mb-3 border-top pt-3">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Challenge Title</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 1</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="card-link">Challenge link</a>
+                    <p class="d-inline-flex gap-1">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseChallenge1" aria-expanded="false" aria-controls="collapseExample">
+                            Click to show completed teams
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- collapsible team names in asc order -->
+        <div class="collapse" id="collapseChallenge1">
+            <div class="container">
+                <h3>Completed Team Details </h3>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                       
+                        <th scope="col">Team Name</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <% challenge_1_completed.forEach(team => { %>
+                        <tr>
+                            <td><%= team.username %></td>
+                        </tr>
+                    <% }) %>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- for scene two -->
+    <div class="container mt-3 m-auto">
+        <h4>Scene 2</h4>
+
+        <div class="container d-flex border-top">
+            <div class="container d-flex flex-column">
+                <div class="container mt-2 mb-3 pt-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Challenge Title</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 2</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <a href="#" class="card-link">Challenge link</a>
+                            <p class="d-inline-flex gap-1">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseChallenge2_1" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    Click to show completed teams
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- collapsible team names in asc order -->
+                <div class="collapse" id="collapseChallenge2_1">
+                    <div class="container">
+                        <h3>Completed Team Details </h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                
+                                <th scope="col">Team Name</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% challenge_2_completed.forEach(team => { %>
+                                <tr>
+                                    <td><%= team.username %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="container d-flex flex-column">
+                <div class="container mt-2 mb-3 pt-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Challenge Title</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 3</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <a href="#" class="card-link">Challenge link</a>
+                            <p class="d-inline-flex gap-1">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseChallenge2_2" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    Click to show completed teams
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- collapsible team names in asc order -->
+                <div class="collapse" id="collapseChallenge2_2">
+                    <div class="container">
+                        <h3>Completed Team Details </h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                               
+                                <th scope="col">Team Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% challenge_3_completed.forEach(team => { %>
+                                <tr>
+                                    <td><%= team.username %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- for scene three -->
+    <div class="container mt-3 m-auto">
+        <h4>Scene 3</h4>
+
+        <div class="container d-flex border-top">
+            <div class="container d-flex flex-column">
+                <div class="container mt-2 mb-3 pt-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Challenge Title</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 4</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <a href="#" class="card-link">Challenge link</a>
+                            <p class="d-inline-flex gap-1">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseChallenge3_1" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    Click to show completed teams
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- collapsible team names in asc order -->
+                <div class="collapse" id="collapseChallenge3_1">
+                    <div class="container">
+                        <h3>Completed Team Details </h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                              
+                                <th scope="col">Team Name</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% challenge_4_completed.forEach(team => { %>
+                                <tr>
+                                    <td><%= team.username %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="container d-flex flex-column">
+                <div class="container mt-2 mb-3 pt-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Challenge Title</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 5</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <a href="#" class="card-link">Challenge link</a>
+                            <p class="d-inline-flex gap-1">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseChallenge3_2" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    Click to show completed teams
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- collapsible team names in asc order -->
+                <div class="collapse" id="collapseChallenge3_2">
+                    <div class="container">
+                        <h3>Completed Team Details </h3>
+                    </div>
+                    <table class="table" 4 <thead>
+                        <tr>
+                            
+                            <th scope="col">Team Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <% challenge_5_completed.forEach(team => { %>
+                                <tr>
+                                    <td><%= team.username %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- for scene four -->
+    <div class="container mt-3 m-auto">
+        <h4>Scene 4</h4>
+
+        <div class="container d-flex border-top">
+            <div class="container d-flex flex-column">
+                <div class="container mt-2 mb-3 pt-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Challenge Title</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 6</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <a href="#" class="card-link">Challenge link</a>
+                            <p class="d-inline-flex gap-1">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseChallenge4_1" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    Click to show completed teams
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- collapsible team names in asc order -->
+                <div class="collapse" id="collapseChallenge4_1">
+                    <div class="container">
+                        <h3>Completed Team Details </h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                              
+                                <th scope="col">Team Name</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% challenge_6_completed.forEach(team => { %>
+                                <tr>
+                                    <td><%= team.username %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="container d-flex flex-column">
+                <div class="container mt-2 mb-3 pt-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Challenge Title</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 7</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <a href="#" class="card-link">Challenge link</a>
+                            <p class="d-inline-flex gap-1">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseChallenge4_2" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    Click to show completed teams
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- collapsible team names in asc order -->
+                <div class="collapse" id="collapseChallenge4_2">
+                    <div class="container">
+                        <h3>Completed Team Details </h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                               
+                                <th scope="col">Team Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% challenge_7_completed.forEach(team => { %>
+                                <tr>
+                                    <td><%= team.username %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- for scene five -->
+    <div class="container mt-3 m-auto">
+        <h4>Scene 5</h4>
+
+        <div class="container d-flex border-top">
+            <div class="container d-flex flex-column">
+                <div class="container mt-2 mb-3 pt-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Challenge Title</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 8</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <a href="#" class="card-link">Challenge link</a>
+                            <p class="d-inline-flex gap-1">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseChallenge5_1" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    Click to show completed teams
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- collapsible team names in asc order -->
+                <div class="collapse" id="collapseChallenge5_1">
+                    <div class="container">
+                        <h3>Completed Team Details </h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                               
+                                <th scope="col">Team Name</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% challenge_8_completed.forEach(team => { %>
+                                <tr>
+                                    <td><%= team.username %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="container d-flex flex-column">
+                <div class="container mt-2 mb-3 pt-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Challenge Title</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 9</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <a href="#" class="card-link">Challenge link</a>
+                            <p class="d-inline-flex gap-1">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseChallenge5_2" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    Click to show completed teams
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- collapsible team names in asc order -->
+                <div class="collapse" id="collapseChallenge5_2">
+                    <div class="container">
+                        <h3>Completed Team Details </h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                
+                                <th scope="col">Team Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% challenge_9_completed.forEach(team => { %>
+                                <tr>
+                                    <td><%= team.username %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- for scene six -->
+    <div class="container mt-3 m-auto">
+        <h4>Scene 6</h4>
+
+        <div class="container d-flex border-top">
+            <div class="container d-flex flex-column">
+                <div class="container mt-2 mb-3 pt-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Challenge Title</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 10</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <a href="#" class="card-link">Challenge link</a>
+                            <p class="d-inline-flex gap-1">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseChallenge6_1" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    Click to show completed teams
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- collapsible team names in asc order -->
+                <div class="collapse" id="collapseChallenge6_1">
+                    <div class="container">
+                        <h3>Completed Team Details </h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                
+                                <th scope="col">Team Name</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% challenge_10_completed.forEach(team => { %>
+                                <tr>
+                                    <td><%= team.username %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="container d-flex flex-column">
+                <div class="container mt-2 mb-3 pt-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Challenge Title</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 11</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <a href="#" class="card-link">Challenge link</a>
+                            <p class="d-inline-flex gap-1">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseChallenge6_2" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    Click to show completed teams
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- collapsible team names in asc order -->
+                <div class="collapse" id="collapseChallenge6_2">
+                    <div class="container">
+                        <h3>Completed Team Details </h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                               
+                                <th scope="col">Team Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% challenge_11_completed.forEach(team => { %>
+                                <tr>
+                                    <td><%= team.username %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- for scene seven -->
+    <div class="container mt-3 m-auto">
+        <h4>Scene 7</h4>
+
+        <div class="container d-flex border-top">
+            <div class="container d-flex flex-column">
+                <div class="container mt-2 mb-3 pt-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Challenge Title</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 12</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <a href="#" class="card-link">Challenge link</a>
+                            <p class="d-inline-flex gap-1">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseChallenge7_1" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    Click to show completed teams
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- collapsible team names in asc order -->
+                <div class="collapse" id="collapseChallenge7_1">
+                    <div class="container">
+                        <h3>Completed Team Details </h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                
+                                <th scope="col">Team Name</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% challenge_12_completed.forEach(team => { %>
+                                <tr>
+                                    <td><%= team.username %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="container d-flex flex-column">
+                <div class="container mt-2 mb-3 pt-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Challenge Title</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 13</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <a href="#" class="card-link">Challenge link</a>
+                            <p class="d-inline-flex gap-1">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseChallenge7_2" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    Click to show completed teams
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- collapsible team names in asc order -->
+                <div class="collapse" id="collapseChallenge7_2">
+                    <div class="container">
+                        <h3>Completed Team Details </h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                               
+                                <th scope="col">Team Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% challenge_13_completed.forEach(team => { %>
+                                <tr>
+                                    <td><%= team.username %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- for scene eight -->
+    <div class="container mt-3 m-auto">
+        <h4>Scene 8</h4>
+
+        <div class="container mt-2 mb-3 border-top pt-3">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Challenge Title</h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 14</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="card-link">Challenge link</a>
+                    <p class="d-inline-flex gap-1">
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseChallenge8" aria-expanded="false" aria-controls="collapseExample">
+                            Click to show completed teams
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- collapsible team names in asc order -->
+        <div class="collapse" id="collapseChallenge8">
+            <div class="container">
+                <h3>Completed Team Details </h3>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        
+                        <th scope="col">Team Name</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <% challenge_14_completed.forEach(team => { %>
+                        <tr>
+                            <td><%= team.username %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+<script>
+    // console.log(regTeamDetails)
+</script>
+
+</html>

@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<!-- we will have a form for adding a team, deleting a team, assigning a team as 'completed' for a challenge, assigning a team
+as 'not completed' for a challenge -->
+
+<body data-bs-theme="dark">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+    </div>
+
+    <!-- for adding a team -->
+    <div class="container mt-5">
+        <h3>Add a team to the competition</h3>
+        <form id="addTeam">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" aria-describedby="username">
+                
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password">
+            </div>
+            <div class="mb-3">
+                <label for="member_1_name" class="form-label">Team Member 1 Name</label>
+                <input type="text" class="form-control" id="member_1_name" aria-describedby="member_1_name">
+                <div id="emailHelp" class="form-text">Enter the name of the team member 1</div>
+            </div>
+            <div class="mb-3">
+                <label for="member_1_regno" class="form-label">Team Member 1 Registration Number</label>
+                <input type="text" class="form-control" id="member_1_regno" aria-describedby="member_1_regno">
+                <div id="emailHelp" class="form-text">Enter the registration number of team member 1</div>
+            </div>
+            <div class="mb-3">
+                <label for="member_2_name" class="form-label">Team Member 2 Name</label>
+                <input type="text" class="form-control" id="member_2_name" aria-describedby="member_2_name">
+                <div id="emailHelp" class="form-text">Enter the name of the team member 2</div>
+            </div>
+            <div class="mb-3">
+                <label for="member_2_regno" class="form-label">Team Member 2 Registration Number</label>
+                <input type="text" class="form-control" id="member_2_regno" aria-describedby="member_2_regno">
+                <div id="emailHelp" class="form-text">Enter the registration number of team member 2</div>
+            </div>
+            <div class="mb-3">
+                <label for="member_3_name" class="form-label">Team Member 3 Name</label>
+                <input type="text" class="form-control" id="member_3_name" aria-describedby="member_3_name">
+                <div id="emailHelp" class="form-text">Enter the name of the team member 3</div>
+            </div>
+            <div class="mb-3">
+                <label for="member_3_regno" class="form-label">Team Member 3 Registration Number</label>
+                <input type="text" class="form-control" id="member_3_regno" aria-describedby="member_3_regno">
+                <div id="emailHelp" class="form-text">Enter the registration number of team member 3</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <!-- for deleting a team -->
+    <div class="container">
+        <h3>Delete a team from the competition</h3>
+        <form id="deleteTeam">
+            <div class="mb-3">
+                <label for="delete_team_username" class="form-label">Team Username</label>
+                <input type="text" class="form-control" id="delete_team_username" aria-describedby="delete_team_username">
+                <div id="emailHelp" class="form-text">Enter the team username of the team you want to delete</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <!-- for adding a team as completed for a challenge -->
+    <div class="container">
+        <h3>Assign a team as 'completed' for a challenge</h3>
+        <form id="completeChallenge">
+            <div class="mb-3">
+                <label for="completed_team_username" class="form-label">Team Username</label>
+                <input type="text" class="form-control" id="completed_team_username" aria-describedby="completed_team_username">
+                <div id="emailHelp" class="form-text">Enter the team username of the team you want to add</div>
+            </div>
+            <div class="mb-3">
+                <label for="completed_challenge" class="form-label">Challenge</label>
+                <input type="text" class="form-control" id="completed_challenge" aria-describedby="completed_challenge">
+                <div id="emailHelp" class="form-text">Enter the challenge number</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <!-- for removing a team as completed from a challenge -->
+    <div class="container">
+        <h3>Assign a team as 'not completed' for a challenge</h3>
+        <form id="notCompleteChallenge">
+            <div class="mb-3">
+                <label for="not_completed_team_username" class="form-label">Team Username</label>
+                <input type="text" class="form-control" id="not_completed_team_username" aria-describedby="not_completed_team_username">
+                <div id="emailHelp" class="form-text">Enter the team username of the team you want to delete from challenge</div>
+            </div>
+            <div class="mb-3">
+                <label for="not_completed_challenge" class="form-label">Challenge</label>
+                <input type="text" class="form-control" id="not_completed_challenge" aria-describedby="not_completed_challenge">
+                <div id="emailHelp" class="form-text">Enter the challenge number</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+
+<script>
+    
+    // we need to get the values from the form and send it to server
+    // for adding a team
+    let addTeamForm = document.getElementById('addTeam');
+    let username = document.getElementById('username');
+    let password = document.getElementById('password');
+    let member_1_name = document.getElementById('member_1_name');
+    let member_1_regno = document.getElementById('member_1_regno');
+    let member_2_name = document.getElementById('member_2_name');
+    let member_2_regno = document.getElementById('member_2_regno');
+    let member_3_name = document.getElementById('member_3_name');
+    let member_3_regno = document.getElementById('member_3_regno');
+    addTeamForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let data = {
+            username: username.value,
+            password: password.value,
+            member_1_name: member_1_name.value,
+            member_1_regno: member_1_regno.value,
+            member_2_name: member_2_name.value,
+            member_2_regno: member_2_regno.value,
+            member_3_name: member_3_name.value,
+            member_3_regno: member_3_regno.value
+        }
+        console.log(data);
+        fetch('http://localhost:3000/addTeam', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+            mode: 'cors'
+        }).then((res) => {
+            console.log(res);
+            if (res.status == 200) {
+                alert('Team added successfully');
+            } else {
+                alert('Team could not be added');
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+        // delete the typed input
+        username.value = '';
+        password.value = '';
+        member_1_name.value = '';
+        member_1_regno.value = '';
+        member_2_name.value = '';
+        member_2_regno.value = '';
+        member_3_name.value = '';
+        member_3_regno.value = '';
+
+    })
+
+    // for deleting a team
+    let deleteTeamForm = document.getElementById('deleteTeam');
+    let delete_team_username = document.getElementById('delete_team_username');
+    deleteTeamForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let data = {
+            username: delete_team_username.value
+        }
+        console.log(data);
+        fetch('http://localhost:3000/deleteTeam', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+            mode: 'cors'
+        }).then((res) => {
+            console.log(res);
+            if (res.status == 200) {
+                alert('Team deleted successfully');
+            } else {
+                alert('Team could not be deleted');
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+        // delete the typed input
+        delete_team_username.value = '';
+
+    })
+
+    // for adding a team as completed for a challenge
+    let completeChallengeForm = document.getElementById('completeChallenge');
+    let team_username_1 = document.getElementById('completed_team_username');
+    let challenge = document.getElementById('completed_challenge');
+    completeChallengeForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let data = {
+            username: team_username_1.value,
+            challenge: challenge.value
+        }
+        console.log(data);
+        fetch('http://localhost:3000/completeChallenge', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+            mode: 'cors'
+        }).then((res) => {
+            console.log(res);
+            if (res.status == 200) {
+                alert('Team added successfully');
+            } else {
+                alert('Team could not be added');
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+        // delete the typed input
+        team_username_1.value = '';
+        challenge.value = '';
+
+    })
+
+    // for removing a team as completed from a challenge
+    let notCompleteChallengeForm = document.getElementById('notCompleteChallenge');
+    let team_username_2 = document.getElementById('not_completed_team_username');
+    let challenge_2 = document.getElementById('not_completed_challenge');
+    notCompleteChallengeForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let data = {
+            username: team_username_2.value,
+            challenge: challenge_2.value
+        }
+        console.log(data);
+        fetch('http://localhost:3000/notCompleteChallenge', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+            mode: 'cors'
+        }).then((res) => {
+            console.log(res);
+            if (res.status == 200) {
+                alert('Team added successfully');
+            } else {
+                alert('Team could not be added');
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
+        // delete the typed input
+        team_username_2.value = '';
+        challenge_2.value = '';
+        
+    })
+    
+
+
+</script>
+</html>
