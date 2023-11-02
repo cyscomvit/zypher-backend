@@ -28,30 +28,12 @@ as 'not completed' for a challenge -->
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
+                            <a class="nav-link" href="forms/">Forms</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                        </li>
+                        
+                        
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+                    
                 </div>
             </div>
         </nav>
@@ -65,7 +47,6 @@ as 'not completed' for a challenge -->
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                 <input type="text" class="form-control" id="username" aria-describedby="username">
-                
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
@@ -111,7 +92,8 @@ as 'not completed' for a challenge -->
         <form id="deleteTeam">
             <div class="mb-3">
                 <label for="delete_team_username" class="form-label">Team Username</label>
-                <input type="text" class="form-control" id="delete_team_username" aria-describedby="delete_team_username">
+                <input type="text" class="form-control" id="delete_team_username"
+                    aria-describedby="delete_team_username">
                 <div id="emailHelp" class="form-text">Enter the team username of the team you want to delete</div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -124,7 +106,8 @@ as 'not completed' for a challenge -->
         <form id="completeChallenge">
             <div class="mb-3">
                 <label for="completed_team_username" class="form-label">Team Username</label>
-                <input type="text" class="form-control" id="completed_team_username" aria-describedby="completed_team_username">
+                <input type="text" class="form-control" id="completed_team_username"
+                    aria-describedby="completed_team_username">
                 <div id="emailHelp" class="form-text">Enter the team username of the team you want to add</div>
             </div>
             <div class="mb-3">
@@ -142,12 +125,15 @@ as 'not completed' for a challenge -->
         <form id="notCompleteChallenge">
             <div class="mb-3">
                 <label for="not_completed_team_username" class="form-label">Team Username</label>
-                <input type="text" class="form-control" id="not_completed_team_username" aria-describedby="not_completed_team_username">
-                <div id="emailHelp" class="form-text">Enter the team username of the team you want to delete from challenge</div>
+                <input type="text" class="form-control" id="not_completed_team_username"
+                    aria-describedby="not_completed_team_username">
+                <div id="emailHelp" class="form-text">Enter the team username of the team you want to delete from
+                    challenge</div>
             </div>
             <div class="mb-3">
                 <label for="not_completed_challenge" class="form-label">Challenge</label>
-                <input type="text" class="form-control" id="not_completed_challenge" aria-describedby="not_completed_challenge">
+                <input type="text" class="form-control" id="not_completed_challenge"
+                    aria-describedby="not_completed_challenge">
                 <div id="emailHelp" class="form-text">Enter the challenge number</div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -156,7 +142,7 @@ as 'not completed' for a challenge -->
 </body>
 
 <script>
-    
+
     // we need to get the values from the form and send it to server
     // for adding a team
     let addTeamForm = document.getElementById('addTeam');
@@ -181,7 +167,7 @@ as 'not completed' for a challenge -->
             member_3_regno: member_3_regno.value
         }
         console.log(data);
-        fetch('http://localhost:3000/addTeam', {
+        fetch('https://zypher-backend.azurewebsites.net/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -219,7 +205,7 @@ as 'not completed' for a challenge -->
             username: delete_team_username.value
         }
         console.log(data);
-        fetch('http://localhost:3000/deleteTeam', {
+        fetch('https://zypher-backend.azurewebsites.net/deleteTeam', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -249,10 +235,10 @@ as 'not completed' for a challenge -->
         e.preventDefault();
         let data = {
             username: team_username_1.value,
-            challenge: challenge.value
+            level: challenge.value
         }
         console.log(data);
-        fetch('http://localhost:3000/completeChallenge', {
+        fetch('https://zypher-backend.azurewebsites.net/completeChallenge', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -276,6 +262,7 @@ as 'not completed' for a challenge -->
     })
 
     // for removing a team as completed from a challenge
+    // not functional for now
     let notCompleteChallengeForm = document.getElementById('notCompleteChallenge');
     let team_username_2 = document.getElementById('not_completed_team_username');
     let challenge_2 = document.getElementById('not_completed_challenge');
@@ -286,7 +273,7 @@ as 'not completed' for a challenge -->
             challenge: challenge_2.value
         }
         console.log(data);
-        fetch('http://localhost:3000/notCompleteChallenge', {
+        fetch('https://zypher-backend.azurewebsites.net/notCompleteChallenge', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -306,10 +293,11 @@ as 'not completed' for a challenge -->
         // delete the typed input
         team_username_2.value = '';
         challenge_2.value = '';
-        
+
     })
-    
+
 
 
 </script>
+
 </html>

@@ -21,6 +21,10 @@ app.use(cors('*'));
 app.set('view engine', 'ejs');
 
 
+app.get("/admin/forms", async(req,res)=>{
+    res.render('forms')
+})
+
 app.get('/admin/index', async(req,res)=>{
     let regTeamDetails = db.prepare("SELECT username, member_1_name, member_1_regno, member_2_name, member_2_regno, member_3_name, member_3_regno, answered_levels FROM users").all();
     // we will get the challenge completed users based on answered_levels
@@ -257,6 +261,28 @@ app.post("/answer", authorize, (req, res) => {
             "UPDATE users SET level = level + 1, scene_reached = 5, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
         ).run(user.username);
     }
+    else if (user.scene_reached === 5 && question.scene === 5) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 6, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+        console.log("scene 6 reached")
+    }
+    else if (user.scene_reached === 6 && question.scene === 6) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 7, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+        console.log("scene 7 reached")
+    }
+    else if (user.scene_reached === 7 && question.scene === 7) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 8, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+    }
+    else if (user.scene_reached === 8 && question.scene === 8) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 9, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+    }
     // this logic is for user coming back after completing the game, to climb up the leaderboard. only level is updated, scene remains same
     else if (user.scene_reached != question.scene) {
         db.prepare(
@@ -319,7 +345,7 @@ app.get("/all-questions", (req, res) => {
     res.json(db.prepare("SELECT * FROM questions").all());
 });
 
-app.post("/delete-user", (req, res) => {
+app.post("/delete-team", (req, res) => {
     // if (req.query.password != process.env.ADMIN_PASSWORD) {
     //     return res.status(401).json({ error: "Invalid password" });
     // }
@@ -340,6 +366,103 @@ app.post("/edit-username", (req, res) => {
         db.prepare("UPDATE users SET username = ? WHERE username = ?").run(newUsername, username)
     );
 });
+
+
+app.post("/completeChallenge", (req, res) => {
+    // this section will work only if user submits answer
+    const { answer = "", question_level = "" , username} = req.body;
+    const user = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
+    const question = db.prepare("SELECT * FROM questions WHERE level = ?").get(question_level);
+
+    // getting the correct levels
+    const currentLevels = (user.answered_levels || "").split(",").map(Number);
+
+    if (!question) {
+        return res.json({ error: "No more questions" });
+    }
+
+    db.prepare("INSERT INTO attempts (username, level, attempt) VALUES (?, ?, ?)").run(
+        user.username,
+        user.level,
+        answer
+    );
+
+
+
+    if (answer !== question.answer) {
+        return res.json({ correct: false });
+    }
+
+    // adding the current level to the list of answered levels since the answer is correct
+    if (!currentLevels.includes(question.level)) {
+        currentLevels.push(question.level);
+    }
+    console.log(currentLevels.join(","))
+    db.prepare("UPDATE users SET answered_levels = ? WHERE username = ?").run(
+        currentLevels.join(","),
+        user.username
+    );
+    console.log("user details level and scene reached", user.level, user.scene_reached)
+
+// now updating the user scene and level
+    if (user.level === 1 && user.scene_reached === 1 && question.scene === 1) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 2, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+    }
+    // he/she solves either chest level 2 or 3, which increments the user level
+    else if (user.scene_reached === 2 && question.scene === 2) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 3, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+    }
+    // similarly for others
+    else if (user.scene_reached === 3 && question.scene === 3) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 4, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+    }
+    else if (user.scene_reached === 4 && question.scene === 4) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 5, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+    }
+    else if (user.scene_reached === 5 && question.scene === 5) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 6, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+        console.log("scene 6 reached")
+    }
+    else if (user.scene_reached === 6 && question.scene === 6) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 7, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+        console.log("scene 7 reached")
+    }
+    else if (user.scene_reached === 7 && question.scene === 7) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 8, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+    }
+    else if (user.scene_reached === 8 && question.scene === 8) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 9, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+    }
+    // this logic is for user coming back after completing the game, to climb up the leaderboard. only level is updated, scene remains same
+    else if (user.scene_reached != question.scene) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+    }
+    // for now scene 5 is finish line, if scene 5 is reached, game ends
+
+    // db.prepare(
+    //     "UPDATE users SET level = level + 1, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+    // ).run(user.username);
+
+    res.json({ correct: true });
+})
 
 app.post("/edit-password", (req, res) => {
     // if (req.query.password != process.env.ADMIN_PASSWORD) {
