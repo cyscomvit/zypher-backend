@@ -181,7 +181,7 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/me", authorize, (req, res) => {
-    res.json(db.prepare("SELECT username, level, scene_reached, answered_levels FROM users WHERE username = ?").get(req.username));
+    res.json(db.prepare("SELECT username, level, scene_reached, answered_levels, answered_special_challenges FROM users WHERE username = ?").get(req.username));
 });
 
 app.post("/question", authorize, (req, res) => {
@@ -197,11 +197,83 @@ app.post("/question", authorize, (req, res) => {
     res.json(
         db
             .prepare(
-                "SELECT level, scene, text, image FROM questions WHERE level = ?"
+                "SELECT level, scene, hidden, text, url FROM questions WHERE level = ?"
             )
             .get(question_level)
     )
 });
+
+app.get("/special-question", authorize, (req, res) => {
+    let question1 = db.prepare("SELECT level, text, link, description FROM special_challenges WHERE level = 1").get();
+    let question2 = db.prepare("SELECT level, text, link, description FROM special_challenges WHERE level = 2").get();
+    let question3 = db.prepare("SELECT level, text, link, description FROM special_challenges WHERE level = 3").get();
+    let question4 = db.prepare("SELECT level, text, link, description FROM special_challenges WHERE level = 4").get();
+    let question5 = db.prepare("SELECT level, text, link, description FROM special_challenges WHERE level = 5").get();
+    console.log(question4)
+    res.json([question1, question2, question3, question4, question5]);
+})
+
+app.post("/add-special-question", (req, res) => {
+    let { level, text, link, description, answer } = req.body;
+    console.log(req.body)
+    res.json(
+        db
+            .prepare(
+                "INSERT INTO special_challenges (level, text, link,description, answer) VALUES (?, ?, ?,?, ?) RETURNING *"
+            )
+            .get(level, text, link, description, answer)
+    );
+});
+
+app.post("/delete-special-question", (req, res) => {
+    // if (req.query.password != process.env.ADMIN_PASSWORD) {
+    //     return res.status(401).json({ error: "Invalid password" });
+    // }
+    let level = req.body.level;
+    console.log(level)
+    res.json(db.prepare("DELETE FROM special_challenges WHERE level = ?").run(level));
+});
+
+app.post("/special-answer", authorize, (req, res) => {  
+    const { answer = "", question_level = "" } = req.body.data;
+    console.log("The details are:",req.body)
+    const user = db.prepare("SELECT * FROM users WHERE username = ?").get(req.username);
+    const question = db.prepare("SELECT * FROM special_challenges WHERE level = ?").get(question_level);
+
+    // getting the correct levels
+    const currentLevels = (user.answered_special_challenges || "").split(",").map(Number);
+    console.log(currentLevels)
+
+    if (!question) {
+        return res.json({ error: "No more questions" });
+    }
+
+    
+
+    if (answer !== question.answer) {
+        return res.json({ correct: false });
+    }
+
+    // adding the current level to the list of answered levels since the answer is correct
+    if (!currentLevels.includes(question.level)) {
+        currentLevels.push(question.level);
+        db.prepare("UPDATE users SET answered_special_challenges = ? WHERE username = ?").run(
+            currentLevels.join(","), user.username
+        );
+        console.log("answer is correct")
+
+        return res.json({ correct: true });
+
+    }
+    else{
+        console.log("already answered" )
+        return res.json({ correct: "already answered" });
+    }
+    
+});
+    
+
+
 
 app.post("/answer", authorize, (req, res) => {
     // this section will work only if user submits answer
@@ -316,14 +388,14 @@ app.post("/add-question", (req, res) => {
     //     return res.status(401).json({ error: "Invalid password" });
     // }
 
-    const { level, scene, text, image, answer } = req.body;
+    const { level, scene, text, url, answer } = req.body;
 
     res.json(
         db
             .prepare(
-                "INSERT INTO questions (level, scene, text, image, answer) VALUES (?, ?, ?, ?, ?) RETURNING *"
+                "INSERT INTO questions (level, scene, text, url, answer) VALUES (?, ?, ?, ?, ?) RETURNING *"
             )
-            .get(level, scene, text, image, answer)
+            .get(level, scene, text, url, answer)
     );
 });
 

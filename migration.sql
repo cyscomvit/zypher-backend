@@ -3,7 +3,17 @@ CREATE TABLE
         level INTEGER PRIMARY KEY NOT NULL,
         scene INTEGER NOT NULL DEFAULT 1,
         text TEXT NOT NULL,
-        image TEXT,
+        hidden BOOLEAN NOT NULL DEFAULT FALSE,
+        url TEXT,
+        answer TEXT NOT NULL
+    );
+
+CREATE TABLE
+    IF NOT EXISTS special_challenges (
+        level INTEGER PRIMARY KEY NOT NULL,
+        text TEXT NOT NULL,
+        description TEXT NOT NULL,
+        link TEXT,
         answer TEXT NOT NULL
     );
 
@@ -22,7 +32,9 @@ CREATE TABLE
         member_3_regno TEXT NOT NULL,
         level INTEGER NOT NULL DEFAULT 1,
         scene_reached NOT NULL DEFAULT 1,
+        points INTEGER NOT NULL DEFAULT 0,
         answered_levels TEXT NOT NULL DEFAULT '[]',
+        answered_special_challenges TEXT NOT NULL DEFAULT '[]',
         reachedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
