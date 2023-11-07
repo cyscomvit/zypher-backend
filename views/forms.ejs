@@ -1,303 +1,823 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Edit details</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+			crossorigin="anonymous"
+		/>
+	</head>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit details</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-</head>
-
-<!-- we will have a form for adding a team, deleting a team, assigning a team as 'completed' for a challenge, assigning a team
+	<!-- we will have a form for adding a team, deleting a team, assigning a team as 'completed' for a challenge, assigning a team
 as 'not completed' for a challenge -->
 
-<body data-bs-theme="dark">
-    <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">Navbar</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="forms/">Forms</a>
-                        </li>
-                        
-                        
-                    </ul>
-                    
-                </div>
-            </div>
-        </nav>
+	<body data-bs-theme="dark">
+		<div class="container-fluid">
+			<nav class="navbar navbar-expand-lg bg-body-tertiary">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="#">Admin Panel</a>
+					<button
+						class="navbar-toggler"
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item">
+								<a
+									class="nav-link active"
+									aria-current="page"
+									href="/k3qfqzo0hgde2lgfblgwm45pp/index"
+									>Home</a
+								>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="/k3qfqzo0hgde2lgfblgwm45pp/forms">Forms</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
 
-    </div>
+		<!-- for adding a team -->
+		<div class="container mt-5">
+			<h3>Add Team</h3>
+			<form id="addTeam">
+				<div class="mb-3">
+					<label for="username" class="form-label">Username</label>
+					<input
+						type="text"
+						class="form-control"
+						id="username"
+						aria-describedby="username"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="password" class="form-label">Password</label>
+					<input type="password" class="form-control" id="password" />
+				</div>
+				<div class="mb-3">
+					<label for="member_1_name" class="form-label"
+						>Team Member 1 Name</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="member_1_name"
+						aria-describedby="member_1_name"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="member_1_regno" class="form-label"
+						>Team Member 1 Registration Number</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="member_1_regno"
+						aria-describedby="member_1_regno"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="member_2_name" class="form-label"
+						>Team Member 2 Name</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="member_2_name"
+						aria-describedby="member_2_name"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="member_2_regno" class="form-label"
+						>Team Member 2 Registration Number</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="member_2_regno"
+						aria-describedby="member_2_regno"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="member_3_name" class="form-label"
+						>Team Member 3 Name</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="member_3_name"
+						aria-describedby="member_3_name"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="member_3_regno" class="form-label"
+						>Team Member 3 Registration Number</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="member_3_regno"
+						aria-describedby="member_3_regno"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="protection_1_client" class="form-label">Auth Token</label>
+					<input
+						type="text"
+						class="form-control"
+						id="protection_1_client"
+						aria-describedby="protection_1_client"
+					/>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+		<br />
 
-    <!-- for adding a team -->
-    <div class="container mt-5">
-        <h3>Add a team to the competition</h3>
-        <form id="addTeam">
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" aria-describedby="username">
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password">
-            </div>
-            <div class="mb-3">
-                <label for="member_1_name" class="form-label">Team Member 1 Name</label>
-                <input type="text" class="form-control" id="member_1_name" aria-describedby="member_1_name">
-                <div id="emailHelp" class="form-text">Enter the name of the team member 1</div>
-            </div>
-            <div class="mb-3">
-                <label for="member_1_regno" class="form-label">Team Member 1 Registration Number</label>
-                <input type="text" class="form-control" id="member_1_regno" aria-describedby="member_1_regno">
-                <div id="emailHelp" class="form-text">Enter the registration number of team member 1</div>
-            </div>
-            <div class="mb-3">
-                <label for="member_2_name" class="form-label">Team Member 2 Name</label>
-                <input type="text" class="form-control" id="member_2_name" aria-describedby="member_2_name">
-                <div id="emailHelp" class="form-text">Enter the name of the team member 2</div>
-            </div>
-            <div class="mb-3">
-                <label for="member_2_regno" class="form-label">Team Member 2 Registration Number</label>
-                <input type="text" class="form-control" id="member_2_regno" aria-describedby="member_2_regno">
-                <div id="emailHelp" class="form-text">Enter the registration number of team member 2</div>
-            </div>
-            <div class="mb-3">
-                <label for="member_3_name" class="form-label">Team Member 3 Name</label>
-                <input type="text" class="form-control" id="member_3_name" aria-describedby="member_3_name">
-                <div id="emailHelp" class="form-text">Enter the name of the team member 3</div>
-            </div>
-            <div class="mb-3">
-                <label for="member_3_regno" class="form-label">Team Member 3 Registration Number</label>
-                <input type="text" class="form-control" id="member_3_regno" aria-describedby="member_3_regno">
-                <div id="emailHelp" class="form-text">Enter the registration number of team member 3</div>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+		<hr class="hr" />
 
-    <!-- for deleting a team -->
-    <div class="container">
-        <h3>Delete a team from the competition</h3>
-        <form id="deleteTeam">
-            <div class="mb-3">
-                <label for="delete_team_username" class="form-label">Team Username</label>
-                <input type="text" class="form-control" id="delete_team_username"
-                    aria-describedby="delete_team_username">
-                <div id="emailHelp" class="form-text">Enter the team username of the team you want to delete</div>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+		<br />
+		<!-- for deleting a team -->
+		<div class="container">
+			<h3>Delete Team</h3>
+			<form id="deleteTeam">
+				<div class="mb-3">
+					<label for="delete_team_username" class="form-label"
+						>Team Username</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="delete_team_username"
+						aria-describedby="delete_team_username"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="protection_2_client" class="form-label">Password</label>
+					<input
+						type="text"
+						class="form-control"
+						id="protection_2_client"
+						aria-describedby="protection_2_client"
+					/>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
 
-    <!-- for adding a team as completed for a challenge -->
-    <div class="container">
-        <h3>Assign a team as 'completed' for a challenge</h3>
-        <form id="completeChallenge">
-            <div class="mb-3">
-                <label for="completed_team_username" class="form-label">Team Username</label>
-                <input type="text" class="form-control" id="completed_team_username"
-                    aria-describedby="completed_team_username">
-                <div id="emailHelp" class="form-text">Enter the team username of the team you want to add</div>
-            </div>
-            <div class="mb-3">
-                <label for="completed_challenge" class="form-label">Challenge</label>
-                <input type="text" class="form-control" id="completed_challenge" aria-describedby="completed_challenge">
-                <div id="emailHelp" class="form-text">Enter the challenge number</div>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+		<br />
+		<hr class="hr" />
 
-    <!-- for removing a team as completed from a challenge -->
-    <div class="container">
-        <h3>Assign a team as 'not completed' for a challenge</h3>
-        <form id="notCompleteChallenge">
-            <div class="mb-3">
-                <label for="not_completed_team_username" class="form-label">Team Username</label>
-                <input type="text" class="form-control" id="not_completed_team_username"
-                    aria-describedby="not_completed_team_username">
-                <div id="emailHelp" class="form-text">Enter the team username of the team you want to delete from
-                    challenge</div>
-            </div>
-            <div class="mb-3">
-                <label for="not_completed_challenge" class="form-label">Challenge</label>
-                <input type="text" class="form-control" id="not_completed_challenge"
-                    aria-describedby="not_completed_challenge">
-                <div id="emailHelp" class="form-text">Enter the challenge number</div>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-</body>
+		<br />
 
-<script>
+		<!-- for adding a challenge -->
+		<div class="container">
+			<h3>Add Challenge</h3>
+			<form id="addChallenge">
+				<div class="mb-3">
+					<label for="challenge_level_1" class="form-label"
+						>Challenge Number</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="challenge_level_1"
+						aria-describedby="challenge_level_1"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="challenge_scene_1" class="form-label">Level (+1)</label>
+					<input
+						type="text"
+						class="form-control"
+						id="challenge_scene_1"
+						aria-describedby="challenge_scene_1"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="challenge_points_1" class="form-label">Points</label>
+					<input
+						type="text"
+						class="form-control"
+						id="challenge_points_1"
+						aria-describedby="challenge_points_1"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="challenge_text_1" class="form-label">Description</label>
+					<input
+						type="text"
+						class="form-control"
+						id="challenge_text_1"
+						aria-describedby="challenge_text_1"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="challenge_url_1" class="form-label">URL for assets</label>
+					<input
+						type="text"
+						class="form-control"
+						id="challenge_url_1"
+						aria-describedby="challenge_url_1"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="challenge_answer_1" class="form-label">FLAG</label>
+					<input
+						type="text"
+						class="form-control"
+						id="challenge_answer_1"
+						aria-describedby="challenge_answer_1"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="challenge_protection_1" class="form-label"
+						>Auth Token</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="challenge_protection_1"
+						aria-describedby="challenge_protection_1"
+					/>
+				</div>
 
-    // we need to get the values from the form and send it to server
-    // for adding a team
-    let addTeamForm = document.getElementById('addTeam');
-    let username = document.getElementById('username');
-    let password = document.getElementById('password');
-    let member_1_name = document.getElementById('member_1_name');
-    let member_1_regno = document.getElementById('member_1_regno');
-    let member_2_name = document.getElementById('member_2_name');
-    let member_2_regno = document.getElementById('member_2_regno');
-    let member_3_name = document.getElementById('member_3_name');
-    let member_3_regno = document.getElementById('member_3_regno');
-    addTeamForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        let data = {
-            username: username.value,
-            password: password.value,
-            member_1_name: member_1_name.value,
-            member_1_regno: member_1_regno.value,
-            member_2_name: member_2_name.value,
-            member_2_regno: member_2_regno.value,
-            member_3_name: member_3_name.value,
-            member_3_regno: member_3_regno.value
-        }
-        console.log(data);
-        fetch('https://zypher-backend.azurewebsites.net/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data),
-            mode: 'cors'
-        }).then((res) => {
-            console.log(res);
-            if (res.status == 200) {
-                alert('Team added successfully');
-            } else {
-                alert('Team could not be added');
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
-        // delete the typed input
-        username.value = '';
-        password.value = '';
-        member_1_name.value = '';
-        member_1_regno.value = '';
-        member_2_name.value = '';
-        member_2_regno.value = '';
-        member_3_name.value = '';
-        member_3_regno.value = '';
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+		<br />
+		<hr class="hr" />
+		<br />
+		<!-- for deleting a challenge -->
+		<div class="container">
+			<h3>Delete Challenge</h3>
+			<form id="deleteChallenge">
+				<div class="mb-3">
+					<label for="delete_level" class="form-label">Level (+1)</label>
+					<input
+						type="text"
+						class="form-control"
+						id="delete_level"
+						aria-describedby="delete_level"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="protection_4_client" class="form-label">Auth Token</label>
+					<input
+						type="text"
+						class="form-control"
+						id="protection_4_client"
+						aria-describedby="protection_4_client"
+					/>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
 
-    })
+		<br />
+		<hr class="hr" />
+		<br />
 
-    // for deleting a team
-    let deleteTeamForm = document.getElementById('deleteTeam');
-    let delete_team_username = document.getElementById('delete_team_username');
-    deleteTeamForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        let data = {
-            username: delete_team_username.value
-        }
-        console.log(data);
-        fetch('https://zypher-backend.azurewebsites.net/deleteTeam', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data),
-            mode: 'cors'
-        }).then((res) => {
-            console.log(res);
-            if (res.status == 200) {
-                alert('Team deleted successfully');
-            } else {
-                alert('Team could not be deleted');
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
-        // delete the typed input
-        delete_team_username.value = '';
+		<!-- for adding a  special challenge -->
+		<div class="container">
+			<h3>Add a Special challenge</h3>
+			<form id="addSplChallenge">
+				<div class="mb-3">
+					<label for="challengeSpl_level_1" class="form-label"
+						>SplChallenge</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="challengeSpl_level_1"
+						aria-describedby="challengeSpl_level_1"
+					/>
+					<div id="emailHelp" class="form-text">
+						Enter the challenge level you want to add
+					</div>
+				</div>
 
-    })
+				<div class="mb-3">
+					<label for="challengeSpl_points_1" class="form-label">Points</label>
+					<input
+						type="text"
+						class="form-control"
+						id="challengeSpl_points_1"
+						aria-describedby="challengeSpl_points_1"
+					/>
+					<div id="emailHelp" class="form-text">Enter the points</div>
+				</div>
+				<div class="mb-3">
+					<label for="challengeSpl_text_1" class="form-label">text</label>
+					<input
+						type="text"
+						class="form-control"
+						id="challengeSpl_text_1"
+						aria-describedby="challengeSpl_text_1"
+					/>
+					<div id="emailHelp" class="form-text">
+						Enter the text description of the challenge
+					</div>
+				</div>
+				<div class="mb-3">
+					<label for="challengeSpl_url_1" class="form-label">url</label>
+					<input
+						type="text"
+						class="form-control"
+						id="challengeSpl_url_1"
+						aria-describedby="challengeSpl_url_1"
+					/>
+					<div id="emailHelp" class="form-text">
+						Enter the text url of the challenge
+					</div>
+				</div>
+				<div class="mb-3">
+					<label for="challengeSpl_answer_1" class="form-label">answer</label>
+					<input
+						type="text"
+						class="form-control"
+						id="challengeSpl_answer_1"
+						aria-describedby="challengeSpl_answer_1"
+					/>
+					<div id="emailHelp" class="form-text">
+						Enter the text answer of the challenge
+					</div>
+				</div>
+				<div class="mb-3">
+					<label for="challengeSpl_protection_1" class="form-label"
+						>Password</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="challengeSpl_protection_1"
+						aria-describedby="challengeSpl_protection_1"
+					/>
+					<div id="emailHelp" class="form-text">
+						Enter the passowrd to continue
+					</div>
+				</div>
 
-    // for adding a team as completed for a challenge
-    let completeChallengeForm = document.getElementById('completeChallenge');
-    let team_username_1 = document.getElementById('completed_team_username');
-    let challenge = document.getElementById('completed_challenge');
-    completeChallengeForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        let data = {
-            username: team_username_1.value,
-            level: challenge.value
-        }
-        console.log(data);
-        fetch('https://zypher-backend.azurewebsites.net/completeChallenge', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data),
-            mode: 'cors'
-        }).then((res) => {
-            console.log(res);
-            if (res.status == 200) {
-                alert('Team added successfully');
-            } else {
-                alert('Team could not be added');
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
-        // delete the typed input
-        team_username_1.value = '';
-        challenge.value = '';
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+		<br />
+		<hr class="hr" />
+		<br />
+		<!-- for deleting a special challenge -->
+		<div class="container">
+			<h3>Delete a Special challenge</h3>
+			<form id="deleteSplChallenge">
+				<div class="mb-3">
+					<label for="deleteSpl_level" class="form-label">Level</label>
+					<input
+						type="text"
+						class="form-control"
+						id="deleteSpl_level"
+						aria-describedby="deleteSpl_level"
+					/>
+					<div id="emailHelp" class="form-text">Enter the level to delete</div>
+				</div>
+				<div class="mb-3">
+					<label for="protectionSpl_2_client" class="form-label"
+						>Password</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="protectionSpl_2_client"
+						aria-describedby="protectionSpl_2_client"
+					/>
+					<div id="emailHelp" class="form-text">
+						Enter the passowrd to continue
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
 
-    })
+		<br />
+		<hr class="hr" />
+		<br />
 
-    // for removing a team as completed from a challenge
-    // not functional for now
-    let notCompleteChallengeForm = document.getElementById('notCompleteChallenge');
-    let team_username_2 = document.getElementById('not_completed_team_username');
-    let challenge_2 = document.getElementById('not_completed_challenge');
-    notCompleteChallengeForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        let data = {
-            username: team_username_2.value,
-            challenge: challenge_2.value
-        }
-        console.log(data);
-        fetch('https://zypher-backend.azurewebsites.net/notCompleteChallenge', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data),
-            mode: 'cors'
-        }).then((res) => {
-            console.log(res);
-            if (res.status == 200) {
-                alert('Team added successfully');
-            } else {
-                alert('Team could not be added');
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
-        // delete the typed input
-        team_username_2.value = '';
-        challenge_2.value = '';
+		<!-- for adding a team as completed for a challenge -->
+		<div class="container">
+			<h3>Assign a team as 'completed' for a challenge</h3>
+			<form id="completeChallenge">
+				<div class="mb-3">
+					<label for="completed_team_username" class="form-label"
+						>Team Username</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="completed_team_username"
+						aria-describedby="completed_team_username"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="completed_challenge" class="form-label"
+						>Challenge Number</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="completed_challenge"
+						aria-describedby="completed_challenge"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="protection_3_client" class="form-label">Auth Token</label>
+					<input
+						type="text"
+						class="form-control"
+						id="protection_3_client"
+						aria-describedby="protection_3_client"
+					/>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
 
-    })
+		<br />
+		<hr class="hr" />
+		<br />
 
+		<!-- for removing a team as completed from a challenge -->
+		<div class="container">
+			<h3>Assign a team as 'not completed' for a challenge</h3>
+			<form id="notCompleteChallenge">
+				<div class="mb-3">
+					<label for="not_completed_team_username" class="form-label"
+						>Team Username</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="not_completed_team_username"
+						aria-describedby="not_completed_team_username"
+					/>
+				</div>
+				<div class="mb-3">
+					<label for="not_completed_challenge" class="form-label"
+						>Challenge Number</label
+					>
+					<input
+						type="text"
+						class="form-control"
+						id="not_completed_challenge"
+						aria-describedby="not_completed_challenge"
+					/>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+	</body>
 
+	<script>
+		// we need to get the values from the form and send it to server
+		// for adding a team
+		let addTeamForm = document.getElementById('addTeam');
+		let username = document.getElementById('username');
+		let password = document.getElementById('password');
+		let member_1_name = document.getElementById('member_1_name');
+		let member_1_regno = document.getElementById('member_1_regno');
+		let member_2_name = document.getElementById('member_2_name');
+		let member_2_regno = document.getElementById('member_2_regno');
+		let member_3_name = document.getElementById('member_3_name');
+		let member_3_regno = document.getElementById('member_3_regno');
+		let protection_1_client = document.getElementById('protection_1_client');
+		// let url = 'https://zypher-backend-prod.azurewebsites.net';
+		let url = 'http://localhost:8080';
+		addTeamForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+			let data = {
+				username: username.value,
+				password: password.value,
+				member_1_name: member_1_name.value,
+				member_1_regno: member_1_regno.value,
+				member_2_name: member_2_name.value,
+				member_2_regno: member_2_regno.value,
+				member_3_name: member_3_name.value,
+				member_3_regno: member_3_regno.value,
+				protection_client: protection_1_client.value,
+			};
+			console.log(data);
+			fetch(url + '/registerBackend', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			})
+				.then((res) => {
+					console.log(res);
+					if (res.status == 200) {
+						alert('Team added successfully');
+					} else {
+						alert('Team could not be added');
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			// delete the typed input
+			username.value = '';
+			password.value = '';
+			member_1_name.value = '';
+			member_1_regno.value = '';
+			member_2_name.value = '';
+			member_2_regno.value = '';
+			member_3_name.value = '';
+			member_3_regno.value = '';
+		});
 
-</script>
+		// for deleting a team
+		let deleteTeamForm = document.getElementById('deleteTeam');
+		let delete_team_username = document.getElementById('delete_team_username');
+		deleteTeamForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+			let data = {
+				username: delete_team_username.value,
+				protection_client: protection_2_client.value,
+			};
+			console.log(data);
+			fetch(url + '/delete-team', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			})
+				.then((res) => {
+					console.log(res);
+					if (res.status == 200) {
+						alert('Team deleted successfully');
+					} else {
+						alert('Team could not be deleted');
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			// delete the typed input
+			delete_team_username.value = '';
+		});
 
+		// for adding a team as completed for a challenge
+		let completeChallengeForm = document.getElementById('completeChallenge');
+		let team_username_1 = document.getElementById('completed_team_username');
+		let challenge = document.getElementById('completed_challenge');
+		completeChallengeForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+			let data = {
+				username: team_username_1.value,
+				question_level: challenge.value,
+				protection_client: protection_3_client.value,
+			};
+			console.log(data);
+			fetch(url + '/completeChallengeBackend', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			})
+				.then((res) => {
+					console.log(res);
+					if (res.status == 200) {
+						alert('Team added successfully');
+					} else {
+						alert('Team could not be added');
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			// delete the typed input
+			team_username_1.value = '';
+			challenge.value = '';
+		});
+
+		// for removing a team as completed from a challenge
+		// not functional for now
+		let notCompleteChallengeForm = document.getElementById(
+			'notCompleteChallenge'
+		);
+		let team_username_2 = document.getElementById(
+			'not_completed_team_username'
+		);
+		let challenge_2 = document.getElementById('not_completed_challenge');
+		notCompleteChallengeForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+			let data = {
+				username: team_username_2.value,
+				challenge: challenge_2.value,
+			};
+			console.log(data);
+			fetch(url + '/notCompleteChallengeBackend', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			})
+				.then((res) => {
+					console.log(res);
+					if (res.status == 200) {
+						alert('Team added successfully');
+					} else {
+						alert('Team could not be added');
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			// delete the typed input
+			team_username_2.value = '';
+			challenge_2.value = '';
+		});
+
+		// for adding a challenge
+		let addChallengeForm = document.getElementById('addChallenge');
+		let challenge_level_1 = document.getElementById('challenge_level_1');
+		let challenge_scene_1 = document.getElementById('challenge_scene_1');
+		let challenge_points_1 = document.getElementById('challenge_points_1');
+		let challenge_text_1 = document.getElementById('challenge_text_1');
+		let challenge_url_1 = document.getElementById('challenge_url_1');
+		let challenge_answer_1 = document.getElementById('challenge_answer_1');
+		let challenge_protection_1 = document.getElementById(
+			'challenge_protection_1'
+		);
+		addChallengeForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+			let data = {
+				level: challenge_level_1.value,
+				scene: challenge_scene_1.value,
+				points: challenge_points_1.value,
+				text: challenge_text_1.value,
+				url: challenge_url_1.value,
+				answer: challenge_answer_1.value,
+				protection_client: challenge_protection_1.value,
+			};
+			console.log(data);
+			fetch(url + '/add-question', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			})
+				.then((res) => {
+					console.log(res);
+					if (res.status == 200) {
+						alert('Challenge added successfully');
+					} else {
+						alert('Challenge could not be added');
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			// delete the typed input
+			challenge_level_1.value = '';
+			challenge_scene_1.value = '';
+			challenge_points_1.value = '';
+			challenge_text_1.value = '';
+			challenge_url_1.value = '';
+			challenge_answer_1.value = '';
+		});
+
+		// for deleting a challenge
+		let deleteChallengeForm = document.getElementById('deleteChallenge');
+		let delete_level = document.getElementById('delete_level');
+		let protection_4_client = document.getElementById('protection_4_client');
+		deleteChallengeForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+			let data = {
+				level: delete_level.value,
+				protection_client: protection_4_client.value,
+			};
+			console.log(data);
+			fetch(url + '/delete-question', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			})
+				.then((res) => {
+					console.log(res);
+					if (res.status == 200) {
+						alert('Challenge deleted successfully');
+					} else {
+						alert('Challenge could not be deleted');
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			// delete the typed input
+			delete_level.value = '';
+		});
+
+		// to add a special challenge
+		let addSplChallengeForm = document.getElementById('addSplChallenge');
+		let challengeSpl_level_1 = document.getElementById('challengeSpl_level_1');
+		let challengeSpl_points_1 = document.getElementById(
+			'challengeSpl_points_1'
+		);
+		let challengeSpl_text_1 = document.getElementById('challengeSpl_text_1');
+		let challengeSpl_url_1 = document.getElementById('challengeSpl_url_1');
+		let challengeSpl_answer_1 = document.getElementById(
+			'challengeSpl_answer_1'
+		);
+		let challengeSpl_protection_1 = document.getElementById(
+			'challengeSpl_protection_1'
+		);
+		addSplChallengeForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+			let data = {
+				level: challengeSpl_level_1.value,
+				points: challengeSpl_points_1.value,
+				text: challengeSpl_text_1.value,
+				url: challengeSpl_url_1.value,
+				answer: challengeSpl_answer_1.value,
+				protection_client: challengeSpl_protection_1.value,
+			};
+			console.log(data);
+			fetch(url + '/add-special-question', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			})
+				.then((res) => {
+					console.log(res);
+					if (res.status == 200) {
+						alert('Challenge added successfully');
+					} else {
+						alert('Challenge could not be added');
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			// delete the typed input
+			challengeSpl_level_1.value = '';
+			challengeSpl_points_1.value = '';
+			challengeSpl_text_1.value = '';
+			challengeSpl_url_1.value = '';
+			challengeSpl_answer_1.value = '';
+		});
+
+		// for deleting a special challenge
+		let deleteSplChallengeForm = document.getElementById('deleteSplChallenge');
+		let deleteSpl_level = document.getElementById('deleteSpl_level');
+		let protectionSpl_2_client = document.getElementById(
+			'protectionSpl_2_client'
+		);
+		deleteSplChallengeForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+			let data = {
+				level: deleteSpl_level.value,
+				protection_client: protectionSpl_2_client.value,
+			};
+			console.log(data);
+			fetch(url + '/delete-special-question', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			})
+				.then((res) => {
+					console.log(res);
+					if (res.status == 200) {
+						alert('Challenge deleted successfully');
+					} else {
+						alert('Challenge could not be deleted');
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			// delete the typed input
+			deleteSpl_level.value = '';
+		});
+	</script>
 </html>

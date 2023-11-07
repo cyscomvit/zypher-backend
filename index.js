@@ -14,18 +14,26 @@ const nginxFormat =
 
 app.use(morgan(nginxFormat));
 
-const db = createDatabase("paradox.sqlite3");
+const db = createDatabase("zypher.sqlite3");
 
 app.use(Express.json());
 app.use(cors('*'));
+// cors for zypher.cyscomvit.com
+// app.use(cors({
+//     origin: 'https://zypher.cyscomvit.com',
+//     optionsSuccessStatus: 200
+// }));
+
 app.set('view engine', 'ejs');
 
 
-app.get("/admin/forms", async(req,res)=>{
+app.get("/k3qfqzo0hgde2lgfblgwm45pp/forms", async (req, res) => {
     res.render('forms')
 })
 
-app.get('/admin/index', async(req,res)=>{
+const protection = 'Zypher$202'
+
+app.get('/k3qfqzo0hgde2lgfblgwm45pp/index', async (req, res) => {
     let regTeamDetails = db.prepare("SELECT username, member_1_name, member_1_regno, member_2_name, member_2_regno, member_3_name, member_3_regno, answered_levels FROM users").all();
     // we will get the challenge completed users based on answered_levels
     console.log(regTeamDetails)
@@ -101,43 +109,114 @@ app.get('/admin/index', async(req,res)=>{
 })
 
 app.post("/register", async (req, res) => {
-    const { username = "", password = "", avatar = "", member_1_name, member_1_regno, member_2_name, member_2_regno,member_3_name, member_3_regno, } = req.body;
+    const { username = "", password = "", avatar = "", member_1_name, member_1_regno, member_2_name, member_2_regno, member_3_name, member_3_regno } = req.body;
     console.log(req.body);
+
 
     try {
         // so 3 cases
         // one case is where only one member name and regno is ther
         // second case is where two member name and regno is there
         // third case is where all three member name and regno is there
-        if(member_1_name && member_1_regno && member_2_name && member_2_regno && member_3_name && member_3_regno){
+        if (member_1_name && member_1_regno && member_2_name && member_2_regno && member_3_name && member_3_regno) {
             const user = db
-            .prepare(
-                "INSERT INTO users (username, password, avatar, member_1_name, member_1_regno, member_2_name, member_2_regno, member_3_name, member_3_regno) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING username, avatar, level"
-            )
-            .get(username, await Password.hash(password), avatar, member_1_name, member_1_regno, member_2_name, member_2_regno, member_3_name, member_3_regno);
+                .prepare(
+                    "INSERT INTO users (username, password, avatar, member_1_name, member_1_regno, member_2_name, member_2_regno, member_3_name, member_3_regno) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING username, avatar, level"
+                )
+                .get(username, await Password.hash(password), avatar, member_1_name, member_1_regno, member_2_name, member_2_regno, member_3_name, member_3_regno);
             console.log(user)
             res.json(user);
-            
+
         }
-        else if(member_1_name && member_1_regno && member_2_name && member_2_regno){
+        else if (member_1_name && member_1_regno && member_2_name && member_2_regno) {
             const user = db
-            .prepare(
-                "INSERT INTO users (username, password, avatar, member_1_name, member_1_regno, member_2_name, member_2_regno) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING username, avatar, level"
-            )
-            .get(username, await Password.hash(password), avatar, member_1_name, member_1_regno, member_2_name, member_2_regno);
-            console.log(user)
-            res.json(user);
-        }
-        else if(member_1_name && member_1_regno){
-            const user = db
-            .prepare(
-                "INSERT INTO users (username, password, avatar, member_1_name, member_1_regno) VALUES (?, ?, ?, ?, ?) RETURNING username, avatar, level"
-            )
-            .get(username, await Password.hash(password), avatar, member_1_name, member_1_regno);
+                .prepare(
+                    "INSERT INTO users (username, password, avatar, member_1_name, member_1_regno, member_2_name, member_2_regno) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING username, avatar, level"
+                )
+                .get(username, await Password.hash(password), avatar, member_1_name, member_1_regno, member_2_name, member_2_regno);
             console.log(user)
             res.json(user);
         }
-        else{
+        else if (member_1_name && member_1_regno) {
+            const user = db
+                .prepare(
+                    "INSERT INTO users (username, password, avatar, member_1_name, member_1_regno) VALUES (?, ?, ?, ?, ?) RETURNING username, avatar, level"
+                )
+                .get(username, await Password.hash(password), avatar, member_1_name, member_1_regno);
+            console.log(user)
+            res.json(user);
+        }
+        else {
+            res.status(400).json({ error: "Please enter atleast one member name and regno" });
+        }
+
+        // const user = db
+        //     .prepare(
+        //         "INSERT INTO users (username, password, avatar) VALUES (?, ?, ?) RETURNING username, avatar, level"
+        //     )
+        //     .get(username, await Password.hash(password), avatar);
+
+        // res.json(user);
+
+
+    } catch (err) {
+        if (err.code === "SQLITE_CONSTRAINT_CHECK")
+            return res.status(400).json({ error: "Username must be between 3 and 20 characters" });
+
+        if (err instanceof Password.PasswordLengthError)
+            return res.status(400).json({ error: "Password must be between 8 and 100 characters" });
+
+        if (err.code === "SQLITE_CONSTRAINT")
+            return res.status(400).json({ error: "Username already taken" });
+
+        res.status(500).json({ error: "Internal server error" });
+        console.log(err);
+    }
+});
+
+
+app.post("/registerBackend", async (req, res) => {
+    const { username = "", password = "", avatar = "", member_1_name, member_1_regno, member_2_name, member_2_regno, member_3_name, member_3_regno, protection_client } = req.body;
+    console.log(req.body);
+    if (protection_client != protection) {
+        console.log("Failed here")
+        return res.status(401).json({ error: "Invalid password" });
+    }
+
+    try {
+        // so 3 cases
+        // one case is where only one member name and regno is ther
+        // second case is where two member name and regno is there
+        // third case is where all three member name and regno is there
+        if (member_1_name && member_1_regno && member_2_name && member_2_regno && member_3_name && member_3_regno) {
+            const user = db
+                .prepare(
+                    "INSERT INTO users (username, password, avatar, member_1_name, member_1_regno, member_2_name, member_2_regno, member_3_name, member_3_regno) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING username, avatar, level"
+                )
+                .get(username, await Password.hash(password), avatar, member_1_name, member_1_regno, member_2_name, member_2_regno, member_3_name, member_3_regno);
+            console.log(user)
+            res.json(user);
+
+        }
+        else if (member_1_name && member_1_regno && member_2_name && member_2_regno) {
+            const user = db
+                .prepare(
+                    "INSERT INTO users (username, password, avatar, member_1_name, member_1_regno, member_2_name, member_2_regno) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING username, avatar, level"
+                )
+                .get(username, await Password.hash(password), avatar, member_1_name, member_1_regno, member_2_name, member_2_regno);
+            console.log(user)
+            res.json(user);
+        }
+        else if (member_1_name && member_1_regno) {
+            const user = db
+                .prepare(
+                    "INSERT INTO users (username, password, avatar, member_1_name, member_1_regno) VALUES (?, ?, ?, ?, ?) RETURNING username, avatar, level"
+                )
+                .get(username, await Password.hash(password), avatar, member_1_name, member_1_regno);
+            console.log(user)
+            res.json(user);
+        }
+        else {
             res.status(400).json({ error: "Please enter atleast one member name and regno" });
         }
 
@@ -165,6 +244,8 @@ app.post("/register", async (req, res) => {
     }
 });
 
+
+
 const [login, authorize] = useJwt(process.env.JWT_SECRET, "HS256", "2d");
 
 app.post("/login", async (req, res) => {
@@ -181,7 +262,9 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/me", authorize, (req, res) => {
-    res.json(db.prepare("SELECT username, level, scene_reached, answered_levels, answered_special_challenges FROM users WHERE username = ?").get(req.username));
+    let data = db.prepare("SELECT username, level, scene_reached, points, answered_levels, answered_special_challenges FROM users WHERE username = ?").get(req.username);
+    console.log(data.answered_levels)
+    res.json(data);
 });
 
 app.post("/question", authorize, (req, res) => {
@@ -197,31 +280,35 @@ app.post("/question", authorize, (req, res) => {
     res.json(
         db
             .prepare(
-                "SELECT level, scene, hidden, text, url FROM questions WHERE level = ?"
+                "SELECT level, scene, points, hidden, text, url FROM questions WHERE level = ?"
             )
             .get(question_level)
     )
 });
 
 app.get("/special-question", authorize, (req, res) => {
-    let question1 = db.prepare("SELECT level, text, link, description FROM special_challenges WHERE level = 1").get();
-    let question2 = db.prepare("SELECT level, text, link, description FROM special_challenges WHERE level = 2").get();
-    let question3 = db.prepare("SELECT level, text, link, description FROM special_challenges WHERE level = 3").get();
-    let question4 = db.prepare("SELECT level, text, link, description FROM special_challenges WHERE level = 4").get();
-    let question5 = db.prepare("SELECT level, text, link, description FROM special_challenges WHERE level = 5").get();
+    let question1 = db.prepare("SELECT level, text, link, points FROM special_challenges WHERE level = 1").get();
+    let question2 = db.prepare("SELECT level, text, link, points FROM special_challenges WHERE level = 2").get();
+    let question3 = db.prepare("SELECT level, text, link, points FROM special_challenges WHERE level = 3").get();
+    let question4 = db.prepare("SELECT level, text, link, points FROM special_challenges WHERE level = 4").get();
+    let question5 = db.prepare("SELECT level, text, link, points FROM special_challenges WHERE level = 5").get();
     console.log(question4)
     res.json([question1, question2, question3, question4, question5]);
 })
 
 app.post("/add-special-question", (req, res) => {
-    let { level, text, link, description, answer } = req.body;
+    let { level, text, url, points, answer, protection_client } = req.body;
+    if (protection_client != protection) {
+        return res.status(401).json({ error: "Invalid password" });
+    }
+    let link = url
     console.log(req.body)
     res.json(
         db
             .prepare(
-                "INSERT INTO special_challenges (level, text, link,description, answer) VALUES (?, ?, ?,?, ?) RETURNING *"
+                "INSERT INTO special_challenges (level, text, link, points, answer) VALUES (?, ?,?,?, ?) RETURNING *"
             )
-            .get(level, text, link, description, answer)
+            .get(level, text, link, points, answer)
     );
 });
 
@@ -234,11 +321,14 @@ app.post("/delete-special-question", (req, res) => {
     res.json(db.prepare("DELETE FROM special_challenges WHERE level = ?").run(level));
 });
 
-app.post("/special-answer", authorize, (req, res) => {  
-    const { answer = "", question_level = "" } = req.body.data;
-    console.log("The details are:",req.body)
+app.post("/special-answer", authorize, (req, res) => {
+    // console.log("The details are:", req.body)
+    const { answer = "", question_level = "" } = req.body;
     const user = db.prepare("SELECT * FROM users WHERE username = ?").get(req.username);
     const question = db.prepare("SELECT * FROM special_challenges WHERE level = ?").get(question_level);
+    // console.log("User details are:", user)
+    let points = user.points;
+    points = points + question.points;
 
     // getting the correct levels
     const currentLevels = (user.answered_special_challenges || "").split(",").map(Number);
@@ -248,7 +338,7 @@ app.post("/special-answer", authorize, (req, res) => {
         return res.json({ error: "No more questions" });
     }
 
-    
+
 
     if (answer !== question.answer) {
         return res.json({ correct: false });
@@ -257,21 +347,21 @@ app.post("/special-answer", authorize, (req, res) => {
     // adding the current level to the list of answered levels since the answer is correct
     if (!currentLevels.includes(question.level)) {
         currentLevels.push(question.level);
-        db.prepare("UPDATE users SET answered_special_challenges = ? WHERE username = ?").run(
-            currentLevels.join(","), user.username
+        db.prepare("UPDATE users SET answered_special_challenges = ?, points = ? WHERE username = ?").run(
+            currentLevels.join(","), points, user.username
         );
-        console.log("answer is correct")
+        console.log("answer is correct, points are: ", points)
 
         return res.json({ correct: true });
 
     }
-    else{
-        console.log("already answered" )
+    else {
+        console.log("already answered")
         return res.json({ correct: "already answered" });
     }
-    
+
 });
-    
+
 
 
 
@@ -280,7 +370,8 @@ app.post("/answer", authorize, (req, res) => {
     const { answer = "", question_level = "" } = req.body;
     const user = db.prepare("SELECT * FROM users WHERE username = ?").get(req.username);
     const question = db.prepare("SELECT * FROM questions WHERE level = ?").get(question_level);
-
+    let points = user.points;
+    points = points + question.points;
     // getting the correct levels
     const currentLevels = (user.answered_levels || "").split(",").map(Number);
 
@@ -288,11 +379,11 @@ app.post("/answer", authorize, (req, res) => {
         return res.json({ error: "No more questions" });
     }
 
-    db.prepare("INSERT INTO attempts (username, level, attempt) VALUES (?, ?, ?)").run(
-        user.username,
-        user.level,
-        answer
-    );
+    // db.prepare("INSERT INTO attempts (username, level, attempt) VALUES (?, ?, ?)").run(
+    //     user.username,
+    //     user.level,
+    //     answer
+    // );
 
 
 
@@ -304,13 +395,16 @@ app.post("/answer", authorize, (req, res) => {
     if (!currentLevels.includes(question.level)) {
         currentLevels.push(question.level);
     }
+    else if (currentLevels.includes(question.level)) {
+        return res.json({ correct: "already answered" });
+    }
     console.log(currentLevels.join(","))
-    db.prepare("UPDATE users SET answered_levels = ? WHERE username = ?").run(
-        currentLevels.join(","),
+    db.prepare("UPDATE users SET answered_levels = ?, points = ? WHERE username = ?").run(
+        currentLevels.join(","), points,
         user.username
     );
 
-// now updating the user scene and level
+    // now updating the user scene and level
     if (user.level === 1 && user.scene_reached === 1 && question.scene === 1) {
         db.prepare(
             "UPDATE users SET level = level + 1, scene_reached = 2, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
@@ -353,6 +447,11 @@ app.post("/answer", authorize, (req, res) => {
     else if (user.scene_reached === 8 && question.scene === 8) {
         db.prepare(
             "UPDATE users SET level = level + 1, scene_reached = 9, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
+        ).run(user.username);
+    }
+    else if (user.scene_reached === 9 && question.scene === 9) {
+        db.prepare(
+            "UPDATE users SET level = level + 1, scene_reached = 10, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
         ).run(user.username);
     }
     // this logic is for user coming back after completing the game, to climb up the leaderboard. only level is updated, scene remains same
@@ -377,7 +476,7 @@ const leaderboard = cacher(60)(() => leaderboardStmt.all());
 // app.get("/leaderboard", (_, res) => res.json(leaderboard()));
 
 app.get('/leaderboard', (req, res) => {
-    const data = db.prepare("SELECT username, level FROM users ORDER BY level DESC, reachedAt ASC").all();
+    const data = db.prepare("SELECT username, points FROM users ORDER BY points DESC, reachedAt ASC").all();
     res.json(data);
 
 })
@@ -388,14 +487,16 @@ app.post("/add-question", (req, res) => {
     //     return res.status(401).json({ error: "Invalid password" });
     // }
 
-    const { level, scene, text, url, answer } = req.body;
-
+    const { level, scene, points, text, url, answer, protection_client } = req.body;
+    if (protection_client != protection) {
+        return res.status(401).json({ error: "Invalid password" });
+    }
     res.json(
         db
             .prepare(
-                "INSERT INTO questions (level, scene, text, url, answer) VALUES (?, ?, ?, ?, ?) RETURNING *"
+                "INSERT INTO questions (level, scene, points, text, url, answer) VALUES (?, ?, ?, ?, ?, ?) RETURNING *"
             )
-            .get(level, scene, text, url, answer)
+            .get(level, scene, points, text, url, answer)
     );
 });
 
@@ -404,7 +505,11 @@ app.post("/delete-question", (req, res) => {
     //     return res.status(401).json({ error: "Invalid password" });
     // }
 
-    const { level } = req.body;
+
+    const { level, protection_client } = req.body;
+    if (protection_client != protection) {
+        return res.status(401).json({ error: "Invalid password" });
+    }
 
     res.json(db.prepare("DELETE FROM questions WHERE level = ?").run(level));
 });
@@ -422,7 +527,10 @@ app.post("/delete-team", (req, res) => {
     //     return res.status(401).json({ error: "Invalid password" });
     // }
 
-    const { username } = req.body;
+    const { username, protection_client } = req.body;
+    if (protection_client != protection) {
+        return res.status(401).json({ error: "Invalid password" });
+    }
 
     res.json(db.prepare("DELETE FROM users WHERE username = ?").run(username));
 });
@@ -440,12 +548,18 @@ app.post("/edit-username", (req, res) => {
 });
 
 
-app.post("/completeChallenge", (req, res) => {
+
+app.post("/CompleteChallengeBackend", (req, res) => {
     // this section will work only if user submits answer
-    const { answer = "", question_level = "" , username} = req.body;
+    const { username = "", question_level = "", protection_client } = req.body;
+    if (protection_client != protection) {
+        return res.status(401).json({ error: "Invalid password" });
+    }
     const user = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
     const question = db.prepare("SELECT * FROM questions WHERE level = ?").get(question_level);
-
+    console.log("The user details are:", user)
+    let points = user.points;
+    points = points + question.points;
     // getting the correct levels
     const currentLevels = (user.answered_levels || "").split(",").map(Number);
 
@@ -453,30 +567,30 @@ app.post("/completeChallenge", (req, res) => {
         return res.json({ error: "No more questions" });
     }
 
-    db.prepare("INSERT INTO attempts (username, level, attempt) VALUES (?, ?, ?)").run(
-        user.username,
-        user.level,
-        answer
-    );
+    // db.prepare("INSERT INTO attempts (username, level, attempt) VALUES (?, ?, ?)").run(
+    //     user.username,
+    //     user.level,
+    //     answer
+    // );
 
 
 
-    if (answer !== question.answer) {
-        return res.json({ correct: false });
-    }
 
     // adding the current level to the list of answered levels since the answer is correct
     if (!currentLevels.includes(question.level)) {
         currentLevels.push(question.level);
     }
+    else if (currentLevels.includes(question.level)) {
+        return res.json({ correct: "already answered" });
+    }
     console.log(currentLevels.join(","))
-    db.prepare("UPDATE users SET answered_levels = ? WHERE username = ?").run(
-        currentLevels.join(","),
+    db.prepare("UPDATE users SET answered_levels = ?, points = ? WHERE username = ?").run(
+        currentLevels.join(","), points,
         user.username
     );
-    console.log("user details level and scene reached", user.level, user.scene_reached)
 
-// now updating the user scene and level
+
+    // now updating the user scene and level
     if (user.level === 1 && user.scene_reached === 1 && question.scene === 1) {
         db.prepare(
             "UPDATE users SET level = level + 1, scene_reached = 2, reachedAt = CURRENT_TIMESTAMP WHERE username = ?"
@@ -534,7 +648,8 @@ app.post("/completeChallenge", (req, res) => {
     // ).run(user.username);
 
     res.json({ correct: true });
-})
+});
+
 
 app.post("/edit-password", (req, res) => {
     // if (req.query.password != process.env.ADMIN_PASSWORD) {

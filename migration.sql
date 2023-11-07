@@ -3,6 +3,7 @@ CREATE TABLE
         level INTEGER PRIMARY KEY NOT NULL,
         scene INTEGER NOT NULL DEFAULT 1,
         text TEXT NOT NULL,
+        points INTEGER NOT NULL DEFAULT 0,
         hidden BOOLEAN NOT NULL DEFAULT FALSE,
         url TEXT,
         answer TEXT NOT NULL
@@ -12,8 +13,8 @@ CREATE TABLE
     IF NOT EXISTS special_challenges (
         level INTEGER PRIMARY KEY NOT NULL,
         text TEXT NOT NULL,
-        description TEXT NOT NULL,
         link TEXT,
+        points INTEGER NOT NULL DEFAULT 0,
         answer TEXT NOT NULL
     );
 

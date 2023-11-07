@@ -710,15 +710,114 @@
         </div>
     </div>
 
+
+    
     <!-- for scene eight -->
     <div class="container mt-3 m-auto">
         <h4>Scene 8</h4>
+
+        <div class="container d-flex border-top">
+            <div class="container d-flex flex-column">
+                <div class="container mt-2 mb-3 pt-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Challenge Title</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 14</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <a href="#" class="card-link">Challenge link</a>
+                            <p class="d-inline-flex gap-1">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseChallenge8_1" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    Click to show completed teams
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- collapsible team names in asc order -->
+                <div class="collapse" id="collapseChallenge8_1">
+                    <div class="container">
+                        <h3>Completed Team Details </h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                
+                                <th scope="col">Team Name</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% challenge_14_completed.forEach(team => { %>
+                                <tr>
+                                    <td><%= team.username %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="container d-flex flex-column">
+                <div class="container mt-2 mb-3 pt-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Challenge Title</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 15</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the
+                                card's content.</p>
+                            <a href="#" class="card-link">Challenge link</a>
+                            <p class="d-inline-flex gap-1">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseChallenge8_2" aria-expanded="false"
+                                    aria-controls="collapseExample">
+                                    Click to show completed teams
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- collapsible team names in asc order -->
+                <div class="collapse" id="collapseChallenge8_2">
+                    <div class="container">
+                        <h3>Completed Team Details </h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                               
+                                <th scope="col">Team Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% challenge_15_completed.forEach(team => { %>
+                                <tr>
+                                    <td><%= team.username %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- for scene nine -->
+    <div class="container mt-3 m-auto">
+        <h4>Scene 9</h4>
 
         <div class="container mt-2 mb-3 border-top pt-3">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">Challenge Title</h5>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 14</h6>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">Challenge 16</h6>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                         card's content.</p>
                     <a href="#" class="card-link">Challenge link</a>
@@ -745,7 +844,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% challenge_14_completed.forEach(team => { %>
+                    <% challenge_16_completed.forEach(team => { %>
                         <tr>
                             <td><%= team.username %></td>
                         </tr>
